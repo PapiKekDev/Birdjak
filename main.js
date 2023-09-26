@@ -20,25 +20,29 @@ function istwitter(foo){
     }
     else return "0";
 }
-
+function dotwitter(string_,replace_,replacement_,author){
+    replaced = string_.replace(replace_,replacement_);
+    output = replaced.replace(/^/,author+"\n")
+    return output;
+}
 client.on('messageCreate', (message) => {
-    //if message.author == client
+    console.log(message)
     if (message.author.bot === false)
     {
         switch (istwitter(message.content)){
             case "1":
                 message.delete();
-                message.channel.send(message.content.replace("https://x.com/","https://fxtwitter.com"));
+                message.channel.send(dotwitter(message.content,"https://x.com/","https://fxtwitter.com",message.author.username));
                 break;
 
             case "2":
                 message.delete();
-                message.channel.send(message.content.replace("https://twitter.com/","https://fxtwitter.com"));
+                message.channel.send(dotwitter(message.content,"https://twitter.com/","https://fxtwitter.com",message.author.username));
                 break;
 
             case "3":
                 message.delete();
-                message.channel.send(message.content.replace("https://vxtwitter.com/","https://fxtwitter.com"));
+                message.channel.send(dotwitter(message.content,"https://vxtwitter.com/","https://fxtwitter.com",message.author.username));
                 break;
             default:
                 return;}}})
