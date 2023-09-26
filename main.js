@@ -32,17 +32,17 @@ client.on('messageCreate', (message) => {
         switch (istwitter(message.content)){
             case "1":
                 message.delete();
-                message.channel.send(dotwitter(message.content,"https://x.com/","https://fxtwitter.com",message.author.username));
+                message.channel.send(dotwitter(message.content,"https://x.com/","https://fxtwitter.com/",message.author.username));
                 break;
 
             case "2":
                 message.delete();
-                message.channel.send(dotwitter(message.content,"https://twitter.com/","https://fxtwitter.com",message.author.username));
+                message.channel.send(dotwitter(message.content,"https://twitter.com/","https://fxtwitter.com/",message.author.username));
                 break;
 
             case "3":
                 message.delete();
-                message.channel.send(dotwitter(message.content,"https://vxtwitter.com/","https://fxtwitter.com",message.author.username));
+                message.channel.send(dotwitter(message.content,"https://vxtwitter.com/","https://fxtwitter.com/",message.author.username));
                 break;
             default:
                 return;}}})
