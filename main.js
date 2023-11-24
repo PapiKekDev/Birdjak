@@ -18,7 +18,13 @@ function istwitter(foo){
     else if (foo.startsWith("https://vxtwitter.com/") === true){
         return "vx";
     }
-    else {return "0";}
+    else if (foo.startsWith("https://www.instagram.com/") === true){
+	return "dd";
+    }
+    else if (foo.startsWith("https://www.reddit.com/") === true){
+        return "rx";
+    }
+else {return "0";}
 }
 function dotwitter(string_,replace_,replacement_,author){
     replaced = string_.replace(replace_,replacement_);
@@ -44,6 +50,16 @@ client.on('messageCreate', (message) => {
                 message.delete();
                 message.channel.send(dotwitter(message.content,"https://vxtwitter.com/","https://fxtwitter.com/",message.author.username));
                 break;
+            
+	    case "dd":
+		message.delete();
+		message.channel.send(dotwitter(message.content,"https://www.instagram.com/","https://www.ddinstagram.com/",message.author.username));
+		break;
+	    case "rx":
+		message.delete();
+		message.channel.send(dotwitter(message.content,"https://www.reddit.com/","HA REDDITOR.... https://www.rxddit.com/",message.author.username));
+		break;
+
             default:
                 return;}}})
 
