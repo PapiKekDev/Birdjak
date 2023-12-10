@@ -9,22 +9,31 @@ const client = new Client({ intents: [
 
 //break
 //twitter posting
-function istwitter(foo){
-    if (foo.startsWith("https://x.com/") === true){
-        return "xx";}
-    else if (foo.startsWith("https://twitter.com/") === true){
-        return "tw";
-    }
-    else if (foo.startsWith("https://vxtwitter.com/") === true){
-        return "vx";
-    }
-    else if (foo.startsWith("https://www.instagram.com/") === true){
-	return "dd";
-    }
-    else if (foo.startsWith("https://www.reddit.com/") === true){
-        return "rx";
-    }
-else {return "0";}
+function istwitter(foo) {
+  switch (true) {
+    case foo.startsWith("https://x.com/"):
+      return "xx";
+    case foo.startsWith("https://twitter.com/"):
+      return "tw";
+    case foo.startsWith("https://vxtwitter.com/"):
+      return "vx";
+    case foo.startsWith("https://www.instagram.com/"):
+      return "dd";
+    case foo.startsWith("https://www.reddit.com/"):
+      return "rx";
+    case foo.startsWith("&https://x.com/"):
+      return "xxk";
+    case foo.startsWith("&https://twitter.com/"):
+      return "twk";
+    case foo.startsWith("&https://vxtwitter.com/"):
+      return "vxk";
+    case foo.startsWith("&https://www.instagram.com/"):
+      return "ddk";
+    case foo.startsWith("&https://www.reddit.com/"):
+      return "rxk";
+    default:
+      return "0";
+  }
 }
 function dotwitter(string_,replace_,replacement_,author){
     replaced = string_.replace(replace_,replacement_);
@@ -40,17 +49,14 @@ client.on('messageCreate', (message) => {
                 message.delete();
                 message.channel.send(dotwitter(message.content,"https://x.com/","https://fxtwitter.com/",message.author.username));
                 break;
-
             case "tw":
                 message.delete();
                 message.channel.send(dotwitter(message.content,"https://twitter.com/","https://fxtwitter.com/",message.author.username));
                 break;
-
             case "vx":
                 message.delete();
                 message.channel.send(dotwitter(message.content,"https://vxtwitter.com/","https://fxtwitter.com/",message.author.username));
                 break;
-            
 	    case "dd":
 		message.delete();
 		message.channel.send(dotwitter(message.content,"https://www.instagram.com/","https://www.ddinstagram.com/",message.author.username));
@@ -59,9 +65,29 @@ client.on('messageCreate', (message) => {
 		message.delete();
 		message.channel.send(dotwitter(message.content,"https://www.reddit.com/","HA REDDITOR.... https://www.rxddit.com/",message.author.username));
 		break;
-
+            case "xxk":
+                message.delete();
+                message.channel.send(dotwitter(message.content,"https://x.com/","https://fxtwitter.com/","euphorai"));
+                break;
+            case "twk":
+                message.delete();
+                message.channel.send(dotwitter(message.content,"https://twitter.com/","https://fxtwitter.com/","euphorai"));
+                break;
+            case "vxk":
+                message.delete();
+                message.channel.send(dotwitter(message.content,"https://vxtwitter.com/","https://fxtwitter.com/","euphorai"));
+                break;
+	    case "ddk":
+		message.delete();
+		message.channel.send(dotwitter(message.content,"https://www.instagram.com/","https://www.ddinstagram.com/","euphorai"));
+		break;
+	    case "rxk":
+		message.delete();
+		message.channel.send(dotwitter(message.content,"https://www.reddit.com/","HA REDDITOR.... https://www.rxddit.com/","euphorai"));
+		break;
             default:
-                return;}}})
+                return;
+}}})
 
 //break
 //login and logging
