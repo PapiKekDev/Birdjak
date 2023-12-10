@@ -40,6 +40,7 @@ function istwitter(foo) {
 }
 
 function dotwitter(string_, replace_, replacement_, author) {
+	if (string_.startsWith("&")){string_ = string_.substring(1)}
 	replaced = string_.replace(replace_, replacement_);
 	output = replaced.replace(/^/, author + "\n")
 	return output;
