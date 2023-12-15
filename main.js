@@ -34,6 +34,16 @@ function istwitter(foo) {
 			return "ddk";
 		case foo.startsWith("&https://www.reddit.com/"):
 			return "rxk";
+		case foo.startsWith("||https://x.com/"):
+			return "xx";
+		case foo.startsWith("||https://twitter.com/"):
+			return "tw";
+		case foo.startsWith("||https://vxtwitter.com/"):
+			return "vx";
+		case foo.startsWith("||https://www.instagram.com/"):
+			return "dd";
+		case foo.startsWith("||https://www.reddit.com/"):
+			return "rx";
 		default:
 			return "0";
 	}
