@@ -1,115 +1,73 @@
-/*requirements*/
+//discordjs
 const {
-	Client,
-	GatewayIntentBits,
-	Events,
-	Message
+    Client,
+    GatewayIntentBits,
+    Events,
+    Message
 } = require('discord.js');
 const client = new Client({
-	intents: [
-		GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent,
-	],
+    intents: [
+        GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent,
+    ],
 });
-//break
-//twitter posting
-function istwitter(foo) {
-	switch (true) {
-		case foo.startsWith("https://x.com/"):
-			return "xx";
-		case foo.startsWith("https://twitter.com/"):
-			return "tw";
-		case foo.startsWith("https://vxtwitter.com/"):
-			return "vx";
-		case foo.startsWith("https://www.instagram.com/"):
-			return "dd";
-		case foo.startsWith("https://www.reddit.com/"):
-			return "rx";
-		case foo.startsWith("&https://x.com/"):
-			return "xxk";
-		case foo.startsWith("&https://twitter.com/"):
-			return "twk";
-		case foo.startsWith("&https://vxtwitter.com/"):
-			return "vxk";
-		case foo.startsWith("&https://www.instagram.com/"):
-			return "ddk";
-		case foo.startsWith("&https://www.reddit.com/"):
-			return "rxk";
-		case foo.startsWith("||https://x.com/"):
-			return "xx";
-		case foo.startsWith("||https://twitter.com/"):
-			return "tw";
-		case foo.startsWith("||https://vxtwitter.com/"):
-			return "vx";
-		case foo.startsWith("||https://www.instagram.com/"):
-			return "dd";
-		case foo.startsWith("||https://www.reddit.com/"):
-			return "rx";
-		default:
-			return "0";
-	}
+
+//Functions
+function IsLink(_Message) {
+    return _Message.startsWith("https://x.com/") || _Message.startsWith("||https://x.com/")
+        || _Message.startsWith("https://twitter.com/") || _Message.startsWith("||https://twitter.com/")
+        || _Message.startsWith("https://vxtwitter.com/") || _Message.startsWith("||https://vxtwitter.com/")
+        || _Message.startsWith("https://instagram.com/") || _Message.startsWith("||https://instagram.com/")
+        || _Message.startsWith("https://reddit.com/") || _Message.startsWith("||https://reddit.com/");
 }
 
-function dotwitter(string_, replace_, replacement_, author) {
-	if (string_.startsWith("&")){string_ = string_.substring(1)}
-	replaced = string_.replace(replace_, replacement_);
-	output = replaced.replace(/^/, author + "\n")
-	return output;
+function IsTwt(_Message) {
+    return _Message.startsWith("https://x.com/") || _Message.startsWith("||https://x.com/")
+        || _Message.startsWith("https://twitter.com/") || _Message.startsWith("||https://twitter.com/")
+        || _Message.startsWith("https://vxtwitter.com/") || _Message.startsWith("||https://vxtwitter.com/")
 }
+
+function FxLink(_Message, _Author) {
+    switch (true) {
+
+        case IsTwt(_Message):
+            return _Message.replace(/https:.*.com/, "https://vxtwitter.com").replace(/^/, _Author + "\n")
+
+        case _Message.startsWith("https://instagram.com/") || _Message.startsWith("||https://instagram.com/"):
+            return _Message.replace(/https:.*.com/, "https://ddinstagram.com").replace(/^/, _Author + "\n")
+
+        case _Message.startsWith("https://reddit.com/") || _Message.startsWith("||https://reddit.com/"):
+            return _Message.replace(/https:.*.com/, "https://rxddit.com").replace(/^/, _Author + "\n")
+
+        default:
+            return _Author + "unknown error. contact maintainer"
+    }
+}
+
+
+//BotLogic
 client.on('messageCreate', (message) => {
-	//console.log(message)
-	if (message.author.bot === false) {
-		switch (istwitter(message.content)) {
-			case "xx":
-				message.delete();
-				message.channel.send(dotwitter(message.content, "https://x.com/", "https://fxtwitter.com/", message.author.username));
-				break;
-			case "tw":
-				message.delete();
-				message.channel.send(dotwitter(message.content, "https://twitter.com/", "https://fxtwitter.com/", message.author.username));
-				break;
-			case "vx":
-				message.delete();
-				message.channel.send(dotwitter(message.content, "https://vxtwitter.com/", "https://fxtwitter.com/", message.author.username));
-				break;
-			case "dd":
-				message.delete();
-				message.channel.send(dotwitter(message.content, "https://www.instagram.com/", "https://www.ddinstagram.com/", message.author.username));
-				break;
-			case "rx":
-				message.delete();
-				message.channel.send(dotwitter(message.content, "https://www.reddit.com/", "HA REDDITOR.... https://www.rxddit.com/", message.author.username));
-				break;
-			case "xxk":
-				message.delete();
-				message.channel.send(dotwitter(message.content, "https://x.com/", "https://fxtwitter.com/", "euphorai"));
-				break;
-			case "twk":
-				message.delete();
-				message.channel.send(dotwitter(message.content, "https://twitter.com/", "https://fxtwitter.com/", "euphorai"));
-				break;
-			case "vxk":
-				message.delete();
-				message.channel.send(dotwitter(message.content, "https://vxtwitter.com/", "https://fxtwitter.com/", "euphorai"));
-				break;
-			case "ddk":
-				message.delete();
-				message.channel.send(dotwitter(message.content, "https://www.instagram.com/", "https://www.ddinstagram.com/", "euphorai"));
-				break;
-			case "rxk":
-				message.delete();
-				message.channel.send(dotwitter(message.content, "https://www.reddit.com/", "HA REDDITOR.... https://www.rxddit.com/", "euphorai"));
-				break;
-			default:
-				return;
-		}
-	}
+    //console.log(message)
+    if (message.author.bot === false) {
+        if (IsLink(message.content)) {
+            message.delete()
+            message.channel.send(FxLink(message.content, message.author));
+        }
+        if (message.content.startsWith("##")) {
+            if (IsLink(message.content.substring(0, 2))) {
+                message.delete()
+                message.channel.send(FxLink(message.content.substring(0, 2), message.author.username));
+            }
+        }
+    }
 })
+
+
 //break
 //login and logging
 const {
-	bottoken
+    bottoken
 } = require('./token.json')
 client.login(bottoken);
 client.once(Events.ClientReady, c => {
-	console.log(`${c.user.tag} start`);
+    console.log(`${c.user.tag} start`);
 });
