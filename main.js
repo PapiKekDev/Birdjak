@@ -46,17 +46,23 @@ function FxLink(_Message, _Author) {
 
 //BotLogic
 client.on('messageCreate', (message) => {
-    //console.log(message)
     if (message.author.bot === false) {
-        if (IsLink(message.content)) {
-            message.delete()
-            message.channel.send(FxLink(message.content, message.author));
-        }
-        if (message.content.startsWith("##")) {
-            if (IsLink(message.content.substring(0, 2))) {
+        console.log(message.content)
+        console.log(message.content.startsWith("&&"))
+        switch (true) {
+            case IsLink(message.content):
                 message.delete()
-                message.channel.send(FxLink(message.content.substring(0, 2), message.author.username));
-            }
+                message.channel.send(FxLink(message.content, message.author.displayName));
+                break;
+
+            case message.content.startsWith("&&") :
+                if (IsLink(message.content.substring(2))) {
+                    message.delete()
+                    message.channel.send(FxLink(message.content.substring(2), "euphorai"));
+                }
+                break;
+            default:
+                break;
         }
     }
 })
@@ -64,9 +70,8 @@ client.on('messageCreate', (message) => {
 
 //break
 //login and logging
-const {
-    bottoken
-} = require('./token.json')
+const bottoken = process.env.TOKEN
+console.log(process.env.TOKEN)
 client.login(bottoken);
 client.once(Events.ClientReady, c => {
     console.log(`${c.user.tag} start`);
