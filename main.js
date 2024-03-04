@@ -47,8 +47,6 @@ function FxLink(_Message, _Author) {
 //BotLogic
 client.on('messageCreate', (message) => {
     if (message.author.bot === false) {
-        console.log(message.content)
-        console.log(message.content.startsWith("&&"))
         switch (true) {
             case IsLink(message.content):
                 message.delete()
@@ -71,7 +69,6 @@ client.on('messageCreate', (message) => {
 //break
 //login and logging
 const bottoken = process.env.TOKEN
-console.log(process.env.TOKEN)
 client.login(bottoken);
 client.once(Events.ClientReady, c => {
     console.log(`${c.user.tag} start`);
