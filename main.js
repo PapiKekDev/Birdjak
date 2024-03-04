@@ -32,10 +32,10 @@ function FxLink(_Message, _Author) {
         case IsTwt(_Message):
             return _Message.replace(/https:.*.com/, "https://vxtwitter.com").replace(/^/, _Author + "\n")
 
-        case _Message.startsWith("https://instagram.com/") || _Message.startsWith("||https://instagram.com/"):
+        case _Message.includes("https://instagram.com/"):
             return _Message.replace(/https:.*.com/, "https://ddinstagram.com").replace(/^/, _Author + "\n")
 
-        case _Message.startsWith("https://reddit.com/") || _Message.startsWith("||https://reddit.com/"):
+        case _Message.includes("https://reddit.com/"):
             return _Message.replace(/https:.*.com/, "https://rxddit.com").replace(/^/, _Author + "\n")
 
         default:
